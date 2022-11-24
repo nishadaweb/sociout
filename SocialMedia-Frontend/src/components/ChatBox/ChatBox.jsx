@@ -21,6 +21,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     const getUserData = async () => {
       try {
         const { data } = await getUser(userId);
+        console.log(data, "dattttaaaaa");
         setUserData(data);
       } catch (error) {
         console.log(error);

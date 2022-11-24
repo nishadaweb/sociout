@@ -109,7 +109,7 @@ export const UnFollowUser = async (req, res) => {
 //get All user
 export const getAllUser = async (req, res) => {
   try {
-    let users = await UserModel.find();
+    let users = await UserModel.find({ isAdmin: false });
 
     users = users.map((user) => {
       const { password, ...otherDetails } = user._doc;

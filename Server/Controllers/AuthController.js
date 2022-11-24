@@ -101,36 +101,43 @@ export const loginUser = async (req, res) => {
   console.log(email, password, "credentials");
   try {
     const user = await UserModel.findOne({ email: email });
-
+    console.log(user, "userrrrrr");
     if (user) {
       const valid = await bcrypt.compare(password, user.password);
       if (!valid) {
         res.status(400).json("Invalid credential");
       } else {
-        if (user.activeStatus) {
-          if (user.verified.email || user.verified.mobile) {
-            const token = jwt.sign(
-              { email: user.email, id: user._id },
-              process.env.JWT_KEY,
-              { expiresIn: "1h" }
-            );
+        if (!user.isAdmin) {
+          if (user.activeStatus) {
+            if (user.verified.email || user.verified.mobile) {
+              const token = jwt.sign(
+                { email: user.email, id: user._id },
+                process.env.JWT_KEY,
+                { expiresIn: "1h" }
+              );
 
-            res.status(200).json({
-              user,
-              status: true,
-              token,
-            });
+              res.status(200).json({
+                user,
+                status: true,
+                token,
+              });
+            } else {
+              res.json({
+                user,
+                status: true,
+              });
+            }
           } else {
-            res.json({
-              user,
-              status: true,
-            });
+            res.json({ status: false, message: "Your account is blocked" });
           }
         } else {
-          res.json({ status: false, message: "Your account is blocked" });
+          console.log("adminnn");
+
+          res.status(200).json({ user });
         }
       }
     } else {
+      console.log("user does not exist");
       res.status(404).json("User doesnot exist");
     }
   } catch (error) {

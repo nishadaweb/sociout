@@ -2,12 +2,12 @@ import UserModel from "../Models/userModel.js";
 import PostModel from "../Models/postModel.js";
 //Get all user
 export const getAllUser = async (req, res) => {
-  const user = await UserModel.find({});
+  const user = await UserModel.find({ isAdmin: false });
 
   res.json({ users: user });
 };
 //Blocking user
-export const updateUser = async (req, res) => {
+export const blockUser = async (req, res) => {
   const id = req.params.id;
   const users = await UserModel.findOne({ _id: id });
   const user = await UserModel.updateOne(

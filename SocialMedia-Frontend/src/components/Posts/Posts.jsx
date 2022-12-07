@@ -11,9 +11,10 @@ const Posts = () => {
   const params = useParams();
   const { user } = useSelector((state) => state.authReducer.authData);
   let { posts, uploading } = useSelector((state) => state.postReducer);
+  const refresh = useSelector((state) => state.postReducer.refresh);
   useEffect(() => {
     dispatch(getTimelinePosts(user._id));
-  }, []);
+  }, [refresh]);
   if (!posts) return "No Posts";
   if (params.id) posts = posts.filter((post) => post.userId === params.id);
   return (

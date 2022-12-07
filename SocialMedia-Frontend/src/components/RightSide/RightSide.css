@@ -7,7 +7,9 @@
 .navIcon {
   margin-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+
+  justify-content: flex-end;
 }
 
 .navIcon > img {

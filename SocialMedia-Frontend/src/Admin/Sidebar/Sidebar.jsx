@@ -13,22 +13,11 @@ import {
 } from "@mui/material";
 import React from "react";
 
-// import FiberNewIcon from "@mui/icons-material/FiberNew";
-// import NewReleasesIcon from "@mui/icons-material/NewReleases";
-// import HowToRegIcon from "@mui/icons-material/HowToReg";
-// import PendingIcon from "@mui/icons-material/Pending";
-// import BeenhereIcon from "@mui/icons-material/Beenhere";
 import PersonIcon from "@mui/icons-material/Person";
-import { useSelector, useDispatch } from "react-redux";
-// import {
-//   newApplication,
-//   blockedApplication,
-//   pendingApplication,
-//   registeredApplication,
-//   allApplication,
-// } from "../features/company/companySlice";
-// import WidgetsIcon from "@mui/icons-material/Widgets";
-// import TimelineIcon from "@mui/icons-material/Timeline";
+import FeedIcon from "@mui/icons-material/Feed";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 
 const active = createTheme({
@@ -65,6 +54,20 @@ function SideBar() {
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="USERS" />
+        </ListItemButton>
+        <Divider variant="middle" />
+        <ListItemButton onClick={() => navigate("/admin/posts")}>
+          <ListItemIcon>
+            <FeedIcon />
+          </ListItemIcon>
+          <ListItemText primary="POSTS" />
+        </ListItemButton>
+        <Divider variant="middle" />
+        <ListItemButton onClick={() => navigate("/admin/rposts")}>
+          <ListItemIcon>
+            <ReportProblemIcon />
+          </ListItemIcon>
+          <ListItemText primary="REPORTED POSTS" />
         </ListItemButton>
         <Divider variant="middle" />
       </List>

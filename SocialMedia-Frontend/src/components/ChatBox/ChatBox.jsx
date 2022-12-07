@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { addMessage, getMessages } from "../../api/MessageRequest";
-import { getUser } from "../../api/UserRequest";
+import { getUser } from "../../api/UserRequest.js";
 import "./ChatBox.css";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";

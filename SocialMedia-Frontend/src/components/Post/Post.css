@@ -19,3 +19,15 @@
   align-items: flex-start;
   gap: 1.5rem;
 }
+.infoInput {
+  border: none;
+  outline: none;
+  background-color: var(--inputColor);
+  border-radius: 5px;
+  padding: 15px;
+  flex: 1;
+}
+.infoInput {
+  width: 400px;
+  min-width: 200px;
+}

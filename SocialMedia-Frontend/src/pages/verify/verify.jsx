@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// import Header from '../Components/Header';
 import Modal from "../../components/Modal/Modal";
 import authReducer from "../../reducers/AuthReducer";
 

@@ -10,9 +10,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Admin from "./pages/Admin/Admin";
 import UserManagement from "./pages/UserManagement/UserManagement";
+import Followers from "./pages/Followers/Followers";
+import PostManagement from "./pages/PostManagement/PostManagement";
+import Reported from "./components/Reported/Reported";
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
-  // console.log(user.user.verified.email, "verifyyyy");
+  console.log(user, "verifyyyy");
   let admin = false;
   if (user) {
     admin = user.user.isAdmin;
@@ -20,7 +23,7 @@ function App() {
     // admin=false
   }
   var token = user?.user?.verified.email || user?.user?.verified.mobile;
-  console.log(token, "tokkkk");
+  console.log(token, "token");
   let isRegistered = user ? true : false;
   console.log(isRegistered, "registertrue");
   let isloggedIn = token ? true : false;
@@ -51,7 +54,17 @@ function App() {
         />
         <Route
           path="/verify"
-          element={isloggedIn ? <Navigate to="/home" /> : <Verify />}
+          element={
+            isRegistered ? (
+              isloggedIn ? (
+                <Navigate to="/home" />
+              ) : (
+                <Verify />
+              )
+            ) : (
+              <Navigate to="../auth" />
+            )
+          }
         />
         <Route
           path="/home"
@@ -108,6 +121,10 @@ function App() {
           element={isRegistered ? <Profile /> : <Navigate to="../auth" />}
         />
         <Route
+          path="/followers"
+          element={isRegistered ? <Followers /> : <Navigate to="../auth" />}
+        />
+        <Route
           path="/chat"
           element={isloggedIn ? <Chat /> : <Navigate to="../auth" />}
         />
@@ -116,6 +133,8 @@ function App() {
           element={admin ? <Admin /> : <Navigate to="../auth" />}
         />
         <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/posts" element={<PostManagement />} />
+        <Route path="/admin/rposts" element={<Reported />} />
       </Routes>
     </div>
   );

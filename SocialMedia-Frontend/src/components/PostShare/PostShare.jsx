@@ -91,7 +91,7 @@ const PostShare = () => {
             Shedule
           </div>
           <button
-            className="button ps-button"
+            className="ps-button"
             onClick={handleSubmit}
             disabled={loading}
           >

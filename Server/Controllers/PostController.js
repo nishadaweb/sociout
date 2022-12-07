@@ -41,9 +41,10 @@ export const updatePost = async (req, res) => {
 //Delete a Post
 export const deletePost = async (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
+  const userId = req.params.uid;
+
   try {
-    const post = await PostModel.findById(id);
+    const post = await PostModel.findById(postId);
     if (post.userId === userId) {
       await post.deleteOne();
       res.status(200).json("Post deleted successfully");
@@ -102,7 +103,6 @@ export const timelinePost = async (req, res) => {
         },
       },
     ]);
-    console.log(followingPosts, "jhdhj");
     res.status(200).json(
       currentUserPosts
         .concat(...followingPosts[0].followingPosts)
@@ -112,5 +112,64 @@ export const timelinePost = async (req, res) => {
     );
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+//Add comment
+export const addComment = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await PostModel.findById(postId);
+    if (req.body.comment == null) {
+      return res.json({ message: "Add any comment" });
+    }
+    let commented = await PostModel.updateOne(
+      { _id: postId },
+      {
+        $push: {
+          comments: {
+            comment: req.body.comment,
+            commentBy: req.body.userId,
+          },
+        },
+      }
+    );
+    console.log(commented, "response of comment");
+    res.json(commented);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+// saved Post
+export const savedPost = async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.params.uid;
+
+  const user = await UserModel.findOne({ _id: userId });
+
+  if (user?.saved.includes(postId)) {
+    await user.updateOne({ $pull: { saved: postId } });
+    res.status(200).json("Post removed");
+  } else {
+    await user.updateOne({ $push: { saved: postId } });
+    res.status(200).json("Post saved");
+  }
+};
+// report post
+
+export const reportPost = async (req, res) => {
+  const postId = req.params.id;
+  console.log(postId, "postid");
+  const userId = req.params.uid;
+  const post = await PostModel.findById(postId);
+  console.log(post, "got post");
+  if (post) {
+    try {
+      const post = await PostModel.findByIdAndUpdate(postId, req.body, {
+        new: true,
+      });
+      console.log(post, "yeahhh");
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

@@ -40,6 +40,7 @@ const UserSchema = mongoose.Schema(
     relationship: String,
     followers: [],
     following: [],
+    saved: [],
   },
   { timestamps: true }
 );

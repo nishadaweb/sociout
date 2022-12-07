@@ -6,10 +6,13 @@ const Conversation = ({ data, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("mounting chat");
     const userId = data.members.find((id) => id !== currentUser);
+    console.log(userId, "chatt");
     const getUserData = async () => {
       try {
         const { data } = await getUser(userId);
+        console.log(data, "dataaaaaa");
         setUserData(data);
         dispatch({ type: "SAVE_USER", data: data });
       } catch (error) {
@@ -23,7 +26,7 @@ const Conversation = ({ data, currentUser, online }) => {
     <>
       <div className="follower conversation">
         <div>
-          <div className="online-dot"></div>
+          {online && <div className="online-dot"></div>}
           <img
             src={
               userData?.profilePicture
@@ -34,6 +37,7 @@ const Conversation = ({ data, currentUser, online }) => {
             className="followerImage"
             style={{ width: "50px", height: "50px" }}
           />
+
           <div className="name" style={{ fontSize: "0.8rem" }}>
             <span>{userData?.username}</span>
             <span style={{ color: online ? "#51e200" : "" }}>

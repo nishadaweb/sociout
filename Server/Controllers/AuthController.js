@@ -49,7 +49,7 @@ const sendEmailOTP = async (email) => {
     //hash the otp
     const salt = await bcrypt.genSalt(10);
     const hashedOtp = await bcrypt.hash(otp, salt);
-    console.log("otp hashed  " + hashedOtp);
+
     const newOtp = new OtpModel({
       user: email,
       otp: hashedOtp,
@@ -57,12 +57,9 @@ const sendEmailOTP = async (email) => {
       expiresAt: Date.now() + 1000 * 60 * 2,
     });
     await newOtp.save();
-    console.log("otp saved");
 
     await transporter.sendMail(mailOptions);
-    console.log("otp sent");
   } catch (error) {
-    console.log(" otp email not sent");
     console.log(error);
     res.json({ status: false });
   }
@@ -70,7 +67,7 @@ const sendEmailOTP = async (email) => {
 //Registering a newUser
 export const registerUser = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
-  console.log(req.body, "register");
+
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
   req.body.password = hashedPassword;
   const newUser = new UserModel(req.body);
@@ -85,7 +82,6 @@ export const registerUser = async (req, res) => {
 
     //saving newuser
     const user = await newUser.save();
-    console.log(user, "regitr");
 
     res.status(200).json({
       user,
@@ -101,7 +97,7 @@ export const loginUser = async (req, res) => {
   console.log(email, password, "credentials");
   try {
     const user = await UserModel.findOne({ email: email });
-    console.log(user, "userrrrrr");
+
     if (user) {
       const valid = await bcrypt.compare(password, user.password);
       if (!valid) {
@@ -113,7 +109,7 @@ export const loginUser = async (req, res) => {
               const token = jwt.sign(
                 { email: user.email, id: user._id },
                 process.env.JWT_KEY,
-                { expiresIn: "1h" }
+                { expiresIn: "30d" }
               );
 
               res.status(200).json({
@@ -131,13 +127,10 @@ export const loginUser = async (req, res) => {
             res.json({ status: false, message: "Your account is blocked" });
           }
         } else {
-          console.log("adminnn");
-
           res.status(200).json({ user });
         }
       }
     } else {
-      console.log("user does not exist");
       res.status(404).json("User doesnot exist");
     }
   } catch (error) {
@@ -148,9 +141,9 @@ export const loginUser = async (req, res) => {
 export const sendOtp = async (req, res, next) => {
   try {
     const item = req.body.data;
-    console.log(req.body.data + "hhjb");
+
     const stringItem = item.toString();
-    console.log(item);
+
     if (stringItem.match(/^[0-9+]{10,13}$/)) {
       console.log("mob");
       const otp = await sendMobileOTP(item);
@@ -169,13 +162,7 @@ export const sendOtp = async (req, res, next) => {
 //verify OTP
 export const verifyOtp = async (req, res, next) => {
   try {
-    console.log(req.body.data, "ohhhh");
     const { OTP, type } = req.body.data;
-    // const {
-    //   type: { OTP, type },
-    // } = req.body.data;
-    console.log(OTP, "ooooo");
-    console.log(type, "dddd");
 
     const stringData = type.toString();
     if (stringData.match(/^[0-9+]{10,13}$/)) {
@@ -187,11 +174,11 @@ export const verifyOtp = async (req, res, next) => {
           { mobile: type },
           { $set: { "verified.mobile": true } }
         );
-        console.log(user, "userkitty");
+
         const token = jwt.sign(
           { email: user.email, id: user._id },
           process.env.JWT_KEY,
-          { expiresIn: "1h" }
+          { expiresIn: "30d" }
         );
         res.json({
           status: true,
@@ -232,7 +219,7 @@ export const verifyOtp = async (req, res, next) => {
                     const token = jwt.sign(
                       { email: user.email, id: user._id },
                       process.env.JWT_KEY,
-                      { expiresIn: "1h" }
+                      { expiresIn: "30d" }
                     );
                     OtpModel.deleteMany({ user: type })
                       .then(() => {
@@ -261,12 +248,11 @@ export const verifyOtp = async (req, res, next) => {
         })
         .catch((error) => {
           console.log(error);
-          console.log("error in find");
         });
     }
   } catch (error) {
     next(error);
-    console.log("errrrrrrr");
+
     res.json({ status: false });
   }
 };

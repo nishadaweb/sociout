@@ -138,37 +138,6 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
           />
         </div>
 
-        {/* <div>
-          <input
-            type="text"
-            className="infoInput"
-            placeholder="RelationShip Status"
-            name="relationship"
-            onChange={handleChange}
-            value={formData.relationship}
-          />
-        </div> */}
-
-        {/* <div style={{ marginLeft: "10px" }}>
-          Profile Image
-          <input
-            style={{ marginLeft: "36px" }}
-            type="file"
-            name="profileImage"
-            className="infoInput"
-            onChange={onImageChange}
-          />
-        </div>
-        <div style={{ marginLeft: "10px" }}>
-          Cover Image
-          <input
-            style={{ marginLeft: "40px" }}
-            type="file"
-            name="coverImage"
-            className="infoInput"
-            onChange={onImageChange}
-          />
-        </div> */}
         <div>
           Profile image
           <input type="file" name="profileImage" onChange={onImageChange} />

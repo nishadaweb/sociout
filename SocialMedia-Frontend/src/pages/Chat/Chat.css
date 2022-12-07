@@ -66,9 +66,15 @@
 
 @media screen and (max-width: 768px) {
   .Chat {
-    grid-template-columns: 16% auto;
+    grid-template-columns: 30% auto;
   }
-  .follower.conversation > div > .name {
-    display: none;
+}
+@media screen and (max-width: 600px) {
+  .Chat {
+    display: inline-block;
+    width: 90vw;
+  }
+  .Search > input {
+    width: 70vw;
   }
 }

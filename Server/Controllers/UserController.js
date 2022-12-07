@@ -4,8 +4,10 @@ import jwt from "jsonwebtoken";
 //Get a user
 export const getUser = async (req, res) => {
   const id = req.params.id;
+
   try {
     const user = await UserModel.findById(id);
+
     if (user) {
       const { password, ...otherDetails } = user._doc;
       res.status(200).json(otherDetails);
@@ -19,7 +21,7 @@ export const getUser = async (req, res) => {
 //Update a user
 export const updateUser = async (req, res) => {
   const id = req.params.id;
-  console.log(req.body);
+
   const { _id, currentUserAdminStatus, password } = req.body;
   if (id === _id) {
     try {
@@ -61,14 +63,13 @@ export const deleteUser = async (req, res) => {
 //Follow a User
 export const followUser = async (req, res) => {
   const id = req.params.id;
-
   const { _id } = req.body;
-
   if (_id === id) {
     res.status(403).json("Action forbidden");
   } else {
     try {
       const followUser = await UserModel.findById(id);
+
       const followingUser = await UserModel.findById(_id);
       if (!followUser.followers.includes(_id)) {
         await followUser.updateOne({ $push: { followers: _id } });
@@ -118,5 +119,20 @@ export const getAllUser = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+//user Search
+
+export const userSearch = async (req, res) => {
+  const searchResult = await UserModel.find({
+    username: new RegExp("^" + req.query.data, "i"),
+  });
+
+  const search = searchResult.map((value) => value.username);
+
+  if (search) {
+    res.status(200).json(search);
+  } else {
+    res.status(400).json({ message: "no user found" });
   }
 };

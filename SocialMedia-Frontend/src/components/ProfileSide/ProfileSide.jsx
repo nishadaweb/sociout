@@ -3,7 +3,7 @@ import FollowersCard from "../FollowersCard/FollowersCard";
 import LogoSearch from "../LogoSearch/LogoSearch";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import "./ProfileSide.css";
-const Profile = () => {
+const ProfileSide = () => {
   return (
     <div className="ProfileSide">
       <LogoSearch />
@@ -12,4 +12,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileSide;

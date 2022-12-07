@@ -19,6 +19,7 @@ const InfoCard = () => {
         setProfileUser(user);
       } else {
         const profileUser = await userApi.getUser(profileUserId);
+        console.log(profileUser, "otheruser");
         setProfileUser(profileUser);
       }
     };
@@ -50,25 +51,39 @@ const InfoCard = () => {
       </div>
       <div className="info">
         <span>
-          <b>Status</b>
+          <b>Status </b>
         </span>
-        <span>{profileUser.relationship}</span>
+        <span>
+          {user._id === profileUserId
+            ? profileUser?.relationship
+            : profileUser?.data?.relationship}
+        </span>
       </div>
       <div className="info">
+        <b>Lives in </b>
         <span>
-          <b>Lives in </b>
+          {user._id === profileUserId
+            ? profileUser?.livesin
+            : profileUser?.data?.livesin}{" "}
         </span>
-        <span>{profileUser.livesin}</span>
       </div>
       <div className="info">
         <span>
           <b>Works at </b>
         </span>
-        <span>{profileUser.worksAt}</span>
+        <span>
+          {user._id === profileUserId
+            ? profileUser?.worksAt
+            : profileUser?.data?.worksAt}
+        </span>
       </div>
-      <button className="button logout-button" onClick={handleLogOut}>
-        Logout
-      </button>
+      {user._id === profileUserId ? (
+        <button className="button logout-button" onClick={handleLogOut}>
+          Logout
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

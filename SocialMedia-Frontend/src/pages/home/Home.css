@@ -4,17 +4,37 @@
   grid-template-columns: 18rem auto 20rem;
   gap: 1rem;
 }
-/* @media screen and(max-width:1200px) {
-  .Home {
-    grid-template-columns: 35% 50% 20rem;
-    overflow-y: scroll;
-  }
-}
-@media screen and(max-width:768px) {
-  .Home {
-    grid-template-columns: 1fr;
-  }
-  .Home::-webkit-scrollbar {
+@media only screen and (max-width: 600px) {
+  .ProfileSide {
     display: none;
   }
-} */
+  .RightSide {
+    display: none;
+  }
+  .PostSide {
+    width: 100%;
+  }
+  .Home {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .RightSide {
+    display: none;
+  }
+
+  .Home {
+    position: relative;
+    display: grid;
+    grid-template-columns: 18rem auto;
+    gap: 1rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .navigation {
+    display: none;
+  }
+}

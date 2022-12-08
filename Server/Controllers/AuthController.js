@@ -145,7 +145,6 @@ export const sendOtp = async (req, res, next) => {
     const stringItem = item.toString();
 
     if (stringItem.match(/^[0-9+]{10,13}$/)) {
-      console.log("mob");
       const otp = await sendMobileOTP(item);
 
       console.log({ status: true, otp });
@@ -166,9 +165,8 @@ export const verifyOtp = async (req, res, next) => {
 
     const stringData = type.toString();
     if (stringData.match(/^[0-9+]{10,13}$/)) {
-      console.log("its mobile nm");
       const verification = await verifyMobileOTP(OTP, type);
-      console.log(verification.status);
+
       if (verification.status === "approved") {
         const user = await UserModel.findOneAndUpdate(
           { mobile: type },
@@ -189,7 +187,6 @@ export const verifyOtp = async (req, res, next) => {
         res.json({ status: false, message: "verification failed" });
       }
     } else {
-      console.log("its email");
       OtpModel.find({ user: type })
         .then(async (result) => {
           console.log(result);

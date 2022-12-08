@@ -1,11 +1,12 @@
 .navigation {
   display: flex;
-  gap: 1rem;
+  gap: 5rem;
   background-color: var(--cardColor);
   padding: 1rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
-
+  position: fixed;
+  bottom: 0;
   justify-content: space-between;
 }
 .navIcons > img {
@@ -15,4 +16,9 @@
 .navIcons > a > img {
   width: 1.5rem;
   height: 1.5rem;
+}
+@media only screen and (min-width: 750px) {
+  .navigation {
+    gap: 6rem;
+  }
 }

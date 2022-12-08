@@ -10,6 +10,7 @@ import {
   savedPost,
   reportPost,
 } from "../Controllers/PostController.js";
+
 const router = express.Router();
 router.post("/", createPost);
 router.get("/:id", getPost);

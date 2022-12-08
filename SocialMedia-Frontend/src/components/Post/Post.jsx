@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Post.css";
 import Comment from "../../img/comment.png";
-
+import Swal from "sweetalert2";
 import Heart from "../../img/like.png";
 import NotLike from "../../img/notlike.png";
 import ThreeDot from "../../img/dots-threee.png";
@@ -17,7 +17,7 @@ import Delete from "../../img/delete-photo.png";
 import Report from "../../img/danger.png";
 import Save from "../../img/save.png";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import { deletePost } from "../../actions/postAction";
+import { deletePost, getTimelinePosts } from "../../actions/postAction";
 import { getUser } from "../../api/UserRequest";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
@@ -35,6 +35,7 @@ const Post = ({ data }) => {
   const dispatch = useDispatch();
   // const [showComments, setShowComments] = useState("");
   const [modalOpened, setModalOpened] = useState(false);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleLike = () => {
@@ -52,6 +53,7 @@ const Post = ({ data }) => {
       const response = await addComment(comment, user._id, data._id);
       setComment("");
       setOpenComment(false);
+      dispatch(getTimelinePosts(user._id));
     } catch (error) {
       console.log(error);
     }
@@ -61,9 +63,21 @@ const Post = ({ data }) => {
   };
   const handleDelete = (postId) => {
     console.log(postId, "");
-    alert("Do You want Delete This post");
-    dispatch(deletePost(postId, user._id));
 
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this post!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deletePost(postId, user._id));
+        Swal.fire("Deleted!", "Your post has been deleted.", "success");
+      }
+    });
     setModalOpened(false);
   };
 
@@ -102,7 +116,6 @@ const Post = ({ data }) => {
             />
             <b style={{ marginTop: "15px" }}>{postUser?.username}</b>
           </span>
-          {/* <span> {data.desc}</span> */}
         </div>
         <div
           style={{
@@ -188,7 +201,6 @@ const Post = ({ data }) => {
           alt=""
           style={{ cursor: "pointer" }}
         />
-        {/* <img src={Share} alt="" /> */}
       </div>
       {openComment && (
         <div>

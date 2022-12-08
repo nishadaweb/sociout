@@ -54,7 +54,6 @@ export const deleteRPost = async (req, res) => {
   console.log("admin");
   const id = req.params.id;
   const userId = req.params.uid;
-  console.log(userId, "Hell", req.params);
 
   const admin = await UserModel.findById(userId);
   if (admin.isAdmin === true) {

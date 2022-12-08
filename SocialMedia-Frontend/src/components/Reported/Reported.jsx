@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Header from "../../Admin/Header/Header";
 
 function Reported() {
   const user = useSelector((state) => state.authReducer.authData);
@@ -49,7 +50,12 @@ function Reported() {
 
   return (
     <div>
-      <Typography variant="h4" sx={{ color: "black", marginBottom: "5px" }}>
+      <Header />
+      <hr />
+      <Typography
+        variant="h4"
+        sx={{ color: "black", fontSize: "20px", marginBottom: "5px" }}
+      >
         {" "}
         Reported Posts
       </Typography>

@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "react-bootstrap";
 import { Typography } from "@mui/material";
+import Header from "../../Admin/Header/Header";
 
 function UserManagement() {
   const [user, setUser] = useState([]);
@@ -22,10 +23,7 @@ function UserManagement() {
   async function usermanagement() {
     try {
       const { data } = await axios.get("http://localhost:5000/admin/users");
-      console.log(data);
-
       setUser(data.users);
-      console.log(data.users, "usersssss");
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +41,12 @@ function UserManagement() {
   }
   return (
     <>
-      <Typography variant="h4" sx={{ color: "black", marginBottom: "5px" }}>
+      <Header />
+      <hr />
+      <Typography
+        variant="h4"
+        sx={{ color: "black", fontSize: "20px", marginBottom: "5px" }}
+      >
         {" "}
         User Management
       </Typography>

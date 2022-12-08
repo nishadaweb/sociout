@@ -30,6 +30,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.56.1",
     "socket.io-client": "^4.5.3",
+    "sweetalert2": "^11.6.15",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.0"
   },

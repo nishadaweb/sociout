@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { Button } from "react-bootstrap";
 import { Typography } from "@mui/material";
 import Tablerow from "../../components/Tablerow/Tablerow";
+import Header from "../../Admin/Header/Header";
 
 function PostManagement() {
   const [post, setPost] = useState([]);
@@ -34,7 +35,12 @@ function PostManagement() {
 
   return (
     <>
-      <Typography variant="h4" sx={{ color: "black", marginBottom: "5px" }}>
+      <Header />
+      <hr />
+      <Typography
+        variant="h4"
+        sx={{ color: "black", fontSize: "20px", marginBottom: "5px" }}
+      >
         {" "}
         Post Management
       </Typography>

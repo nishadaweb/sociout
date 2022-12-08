@@ -86,19 +86,19 @@ const ProfileCard = ({ location }) => {
             <div className="follow">
               <span>
                 {user._id === profileUserId
-                  ? profileUser?.following?.length
-                  : profileUser?.data?.following.length}
+                  ? profileUser?.followers?.length
+                  : profileUser?.data?.followers.length}
               </span>
-              <span>following</span>
+              <span>followers</span>
             </div>
             <div className="vl"></div>
             <div className="follow">
               <span>
                 {user._id === profileUserId
-                  ? profileUser?.followers?.length
-                  : profileUser?.data?.followers.length}
+                  ? profileUser?.following?.length
+                  : profileUser?.data?.following.length}
               </span>
-              <span>followers</span>
+              <span>following</span>
             </div>
             {location === "profilePage" && (
               <>

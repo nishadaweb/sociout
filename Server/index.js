@@ -10,6 +10,7 @@ import UploadRoute from "./Routes/UploadRoute.js";
 import ChatRoute from "./Routes/ChatRoute.js";
 import MessageRoute from "./Routes/MessageRoute.js";
 import AdminRoute from "./Routes/AdminRoute.js";
+import { mongoconnection } from "./config/db.js";
 //Routes
 const app = express();
 //to serve images for public
@@ -20,17 +21,11 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 dotenv.config();
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    app.listen(process.env.PORT, () =>
-      console.log(`listening at ${process.env.PORT}`)
-    )
-  )
-  .catch((error) => console.log(error));
+
+app.listen(process.env.PORT, () =>
+  console.log(`listening at ${process.env.PORT}`)
+);
+
 //usage of routes
 app.use("/auth", AuthRoute);
 app.use("/user", UserRoute);

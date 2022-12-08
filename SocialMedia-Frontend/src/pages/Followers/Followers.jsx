@@ -4,7 +4,7 @@ import Navigation from "../../components/Navigation/Navigation";
 
 function Followers() {
   return (
-    <div className="RightSide">
+    <div>
       <Navigation />
       <FollowersCard />
     </div>

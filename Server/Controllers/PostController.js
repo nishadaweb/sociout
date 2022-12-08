@@ -60,16 +60,14 @@ export const likePost = async (req, res) => {
   const id = req.params.id;
   console.log(id);
   const { userId } = req.body;
-  console.log(userId, "dfbfh");
+
   try {
     const post = await PostModel.findById(id);
     if (!post.likes.includes(userId)) {
-      console.log("liked");
       await post.updateOne({ $push: { likes: userId } });
 
       res.status(200).json("post liked");
     } else {
-      console.log("unliked");
       await post.updateOne({ $pull: { likes: userId } });
       res.status(200).json("Post Unliked");
     }
@@ -133,7 +131,7 @@ export const addComment = async (req, res) => {
         },
       }
     );
-    console.log(commented, "response of comment");
+
     res.json(commented);
   } catch (error) {
     res.status(500).json(error);
@@ -167,7 +165,6 @@ export const reportPost = async (req, res) => {
       const post = await PostModel.findByIdAndUpdate(postId, req.body, {
         new: true,
       });
-      console.log(post, "yeahhh");
     } catch (err) {
       console.log(err);
     }
